@@ -1,13 +1,22 @@
+int led = numPixels;
+
 void gameLightTimer(){ //count down during game
-    for (int led = 0; led <= numPixels; led++) {
-
-    setColor(led, 255, 255, 255, 100);
+  if(!isCountingDown){
+    pixels.fill(pixels.Color(0, 0, 0));
+    pixels.show();
+      for (int led = 0; led <= numPixels; led++) {
+      setColor(led, 255, 255, 255, 30);
+      }
+      isCountingDown = true;
+      led = numPixels;
   }
-  delay(100);
-  for (int led = numPixels; led >= 0; led--) {
-
-    setColor(led, 0, 0, 0, 100);
-    delay(1000);
+  if(countDownTimer <= millis() && isCountingDown){
+    setColor(led, 0, 0, 0, 0);
+    led--;
+    if(led <= 0){
+      isCountingDown = false;
+    }
+    
+      countDownTimer = millis()+1000;
   }
-  delay(100);
 }
