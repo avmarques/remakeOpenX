@@ -26,6 +26,7 @@ bool isCountingDown = false;
 
 //tweespeler modus
 bool twoPlayerMode = false;
+bool gameInProgress = false;
 
 void setup() {
   Wire.begin();
@@ -45,24 +46,29 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  soilCheck();    //TODO
+  uvLightCheck(); //TODO
 
   bool startState = mcp.digitalRead(startButton);  // lees de staat van de knop
   bool twoPlayerState = mcp.digitalRead(twoPlayerButton);  // lees de staat van de multiplayerknop
 
-  if(twoPlayerState == true && !isCountingDown ){
+  if(twoPlayerState == true && !gameInProgress){   //2 speler modus kan alleen worden ingeschakeld wanneer er nog niet op de startknop is gedrukt
     twoPlayerMode = true;
-    Serial.println("Tweespeler modus is ingeschakeld");
-  } 
+    Serial.println("Tweespeler modus is ingeschakeld"); 
+  } else if(!gameInProgress && !twoPlayerMode ) {
+    Serial.println("Nope fuck you");
+  }
   
-  Serial.println(startState);
+  //Serial.println(startState);
 
   if(startState == HIGH || isCountingDown ){
     gameLightTimer(); 
     digitalWrite(27,HIGH);
+    gameInProgress = true;
   } else {
     gameLightDefault();
     digitalWrite(27,LOW);
+    gameInProgress = false;
   }
 
 }

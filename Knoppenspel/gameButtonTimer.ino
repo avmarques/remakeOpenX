@@ -13,13 +13,14 @@ void gameLightTimer(){ //count down during game
   if(countDownTimer <= millis() && isCountingDown){
     setColor(led, 0, 0, 0, 0);
     led--;
-    if(led < 0){
+    if(led <= 0){
       isCountingDown = false;
       twoPlayerMode = false;
     }
     
-      countDownTimer = millis()+1000;
+      countDownTimer = millis()+100;
   }
- 
+
+
 
 }
