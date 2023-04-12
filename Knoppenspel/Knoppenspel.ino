@@ -25,6 +25,7 @@ long countDownTimer = 0;
 bool isCountingDown = false;
 
 //tweespeler modus
+long reset2playerTime = 0;
 bool twoPlayerMode = false;
 bool gameInProgress = false;
 
@@ -52,11 +53,19 @@ void loop() {
   bool startState = mcp.digitalRead(startButton);  // lees de staat van de knop
   bool twoPlayerState = mcp.digitalRead(twoPlayerButton);  // lees de staat van de multiplayerknop
 
-  if(twoPlayerState == true && !gameInProgress){   //2 speler modus kan alleen worden ingeschakeld wanneer er nog niet op de startknop is gedrukt
-    twoPlayerMode = true;
-    Serial.println("Tweespeler modus is ingeschakeld"); 
-  } else if(!gameInProgress && !twoPlayerMode ) {
-    Serial.println("Nope fuck you");
+
+  if(twoPlayerState == true && !gameInProgress /*&& reset2playerTime > millis()*/){   //2 speler modus kan alleen worden ingeschakeld wanneer er nog niet op de startknop is gedrukt
+    if(reset2playerTime <= millis()) {
+      twoPlayerMode = false;
+      Serial.println("Tweespeler modus is NO MORE");
+    }  
+    else{
+      twoPlayerMode = true;
+      Serial.println("Tweespeler modus is ingeschakeld");
+    }  
+  } 
+  else {
+    reset2playerTime = millis()+2000;
   }
   
   //Serial.println(startState);
