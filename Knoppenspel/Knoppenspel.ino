@@ -7,6 +7,7 @@
 #include <Adafruit_NeoPixel.h>
 
 #define startButton 0
+#define twoPlayerButton 14
 #define PIN 12
 
 int buttonState;    // de huidige staat van de knop
@@ -23,11 +24,15 @@ bool knipperBool = false;
 long countDownTimer = 0;
 bool isCountingDown = false;
 
+//tweespeler modus
+bool twoPlayerMode = false;
+
 void setup() {
   Wire.begin();
   mcp.begin_I2C(0x20); // Address 0
 
   mcp.pinMode(startButton, INPUT_PULLUP);
+  mcp.pinMode(twoPlayerButton, INPUT_PULLUP);
 
   pinMode(27, OUTPUT);
 
@@ -41,13 +46,18 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  
+
   bool startState = mcp.digitalRead(startButton);  // lees de staat van de knop
-  delay(100);
+  bool twoPlayerState = mcp.digitalRead(twoPlayerButton);  // lees de staat van de multiplayerknop
+
+  if(twoPlayerState == true && !isCountingDown ){
+    twoPlayerMode = true;
+    Serial.println("Tweespeler modus is ingeschakeld");
+  } 
   
   Serial.println(startState);
 
-  if(startState == HIGH || isCountingDown){
+  if(startState == HIGH || isCountingDown ){
     gameLightTimer(); 
     digitalWrite(27,HIGH);
   } else {
