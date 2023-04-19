@@ -10,11 +10,15 @@
 #define twoPlayerButton 14
 #define PIN 12
 
+#define buttonLedPin 4
+uint8_t ledCount = 8;
+
 int buttonState;    // de huidige staat van de knop
 int lastButtonState = LOW; // de laatste bekende staat van de knop
 
 uint8_t numPixels = 32;
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(numPixels, PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel pixels = Adafruit_NeoPixel(numPixels, buttonLedPin, NEO_GRB + NEO_KHZ800);
 
 Adafruit_MCP23X17 mcp;
 
@@ -72,6 +76,7 @@ void loop() {
 
   if(startState == HIGH || isCountingDown ){
     gameLightTimer(); 
+    game();
     digitalWrite(27,HIGH);
     gameInProgress = true;
   } else {
