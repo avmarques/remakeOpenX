@@ -1,9 +1,8 @@
-int led = numPixels;
 
 void gameLightTimer(){ //count down during game
   if(!isCountingDown){
-    pixels.fill(pixels.Color(0, 0, 0));
-    pixels.show();
+    pixels1.fill(pixels1.Color(0, 0, 0));
+    pixels1.show();
       for (int led = 0; led <= numPixels; led++) {
       setColor(led, 255, 255, 255, 30);
       }
@@ -18,9 +17,7 @@ void gameLightTimer(){ //count down during game
       twoPlayerMode = false;
     }
     
-      countDownTimer = millis()+100;
+      countDownTimer = millis()+1000;
   }
-
-
 
 }

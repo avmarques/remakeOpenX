@@ -4,14 +4,14 @@ void gameLightDefault(){
     actionTime = millis()+1000;
     if(knipperBool){
       knipperBool = false;
-    pixels.fill(pixels.Color(255, 255, 255));
+    pixels1.fill(pixels1.Color(255, 255, 255));
     }
     else{
       knipperBool = true;
-    pixels.fill(pixels.Color(0, 0, 0));
+    pixels1.fill(pixels1.Color(0, 0, 0));
     }
    // knipperBool = !knipperBool;
   }
-  pixels.show();
+  pixels1.show();
 
 }
