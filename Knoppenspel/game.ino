@@ -1,16 +1,33 @@
+int randomLED;
+int randomLEDp1;
+int randomLEDp2;
+
+const int ledPin =  13;      // the number of the LED pin
+int SpelButtonState = 0;
+bool next = true;
+
+const int ButtonArray[14]= {0,1,54,55,56,57,58,59,60,61,62,63,64,65};
+
+
+
 void game(){
   static long previousTime = 0;
-  if (millis() - previousTime >= 750) {
+  if (millis() - previousTime >= 5000 || next) {
+    next=false;
     previousTime = millis();
     if(!twoPlayerMode){
-      int randomLED = random(2, 14);
+      randomLED = random(2, 14);
+      
+      Serial.print("Knop:");
+      Serial.println(randomLED);
+      
       pixels2.clear();
       pixels2.setPixelColor(randomLED, pixels2.Color(255, 255, 255));
       Serial.println(randomLED);
       
     } else if (twoPlayerMode){
-      int randomLEDp1 = random(2, 7);
-      int randomLEDp2 = random(8, 13);
+      randomLEDp1 = random(2, 8);
+      randomLEDp2 = random(8, 14);
 
       pixels2.clear();
       pixels2.setPixelColor(randomLEDp1, pixels2.Color(234, 147, 0));
@@ -23,6 +40,16 @@ void game(){
     }
     
     pixels2.show();
+  
   }
-  // pixels2.clear();
+  SpelButtonState = digitalRead(ButtonArray[randomLEDp1]);
+  if (SpelButtonState) {
+    digitalWrite(ledPin, HIGH);
+      Serial.println("YES");
+    next = true;
+    delay(10);
+  } else {
+    digitalWrite(ledPin, LOW);
+    next = false;
+  }
 }
