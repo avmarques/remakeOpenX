@@ -1,17 +1,11 @@
-#include <Adafruit_MCP23X08.h>
-#include <Adafruit_MCP23X17.h>
-#include <Adafruit_MCP23XXX.h>
-
-#include <Wire.h>
-
 #include <Adafruit_NeoPixel.h>
 
-#define startButton 27
+#define startButton 8
 #define twoPlayerButton 33
-#define pinStartRing 14
+#define pinStartRing 10
 
 #define buttonLedPin 12
-uint8_t ledCount = 8;
+uint8_t ledCount = 14;
 
 
 int buttonState;    // de huidige staat van de knop
@@ -22,9 +16,6 @@ Adafruit_NeoPixel pixels1 = Adafruit_NeoPixel(numPixels, pinStartRing, NEO_GRB +
 int led = numPixels;
 
 Adafruit_NeoPixel pixels2 = Adafruit_NeoPixel(ledCount, buttonLedPin, NEO_GRB + NEO_KHZ800);
-
-
-Adafruit_MCP23X17 mcp;
 
 long actionTime = 0;
 bool knipperBool = false;
@@ -38,8 +29,6 @@ bool twoPlayerMode = false;
 bool gameInProgress = false;
 
 void setup() {
-  Wire.begin();
-  mcp.begin_I2C(0x20); // Address 0
 
   pinMode(startButton, INPUT_PULLUP);
   pinMode(twoPlayerButton, INPUT_PULLUP);
@@ -63,20 +52,21 @@ void loop() {
   bool startState = digitalRead(startButton);  // lees de staat van de knop
   bool twoPlayerState = digitalRead(twoPlayerButton);  // lees de staat van de multiplayerknop
 
+  twoPlayerMode = true;
 
-  if(twoPlayerState == true && !gameInProgress /*&& reset2playerTime > millis()*/){   //2 speler modus kan alleen worden ingeschakeld wanneer er nog niet op de startknop is gedrukt
-    if(reset2playerTime <= millis()) {
-      twoPlayerMode = false;
-      Serial.println("Tweespeler modus is NO MORE");
-    }  
-    else{
-      twoPlayerMode = true;
-      Serial.println("Tweespeler modus is ingeschakeld");
-    }  
-  } 
-  else {
-    reset2playerTime = millis()+2000;
-  }
+  // if(twoPlayerState == true && !gameInProgress /*&& reset2playerTime > millis()*/){   //2 speler modus kan alleen worden ingeschakeld wanneer er nog niet op de startknop is gedrukt
+  //   if(reset2playerTime <= millis()) {
+  //     twoPlayerMode = false;
+  //     Serial.println("Tweespeler modus is NO MORE");
+  //   }  
+  //   else{
+  //     twoPlayerMode = true;
+  //     Serial.println("Tweespeler modus is ingeschakeld");
+  //   }  
+  // } 
+  // else {
+  //   reset2playerTime = millis()+2000;
+  // }
   
   //Serial.println(startState);
 

@@ -15,6 +15,7 @@ void gameLightTimer(){ //count down during game
     if(led <= 0){
       isCountingDown = false;
       twoPlayerMode = false;
+      gameEnding();
     }
     
       countDownTimer = millis()+1000;
