@@ -12,7 +12,7 @@ const int ButtonArray[14]= {0,1,54,55,56,57,58,59,60,61,62,63,64,65};
 
 void game(){
   static long previousTime = 0;
-  if (millis() - previousTime >= 5000 || next) {
+  if (millis() - previousTime >= 750 || next) {
     next=false;
     previousTime = millis();
     if(!twoPlayerMode){
