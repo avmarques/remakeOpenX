@@ -6,6 +6,7 @@ void gameEnding(){
     pixels2.fill(pixels1.Color(0, 0, 0));
     pixels2.show();
     pixels2.clear();
+    Serial.print(scoreP1);
 
   
 }

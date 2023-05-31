@@ -1,6 +1,7 @@
 int randomLED;
 int randomLEDp1;
 int randomLEDp2;
+int scoreP1 = 0;
 
 const int ledPin =  13;      // the number of the LED pin
 int SpelButtonState = 0;
@@ -12,7 +13,7 @@ const int ButtonArray[14]= {0,1,54,55,56,57,58,59,60,61,62,63,64,65};
 
 void game(){
   static long previousTime = 0;
-  if (millis() - previousTime >= 750 || next) {
+  if (millis() - previousTime >= 2000 || next) {
     next=false;
     previousTime = millis();
     if(!twoPlayerMode){
@@ -46,6 +47,7 @@ void game(){
   if (SpelButtonState) {
     digitalWrite(ledPin, HIGH);
       Serial.println("YES");
+      scoreP1++;
     next = true;
     delay(10);
   } else {
