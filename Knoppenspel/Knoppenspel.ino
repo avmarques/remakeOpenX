@@ -17,6 +17,20 @@ int led = numPixels;
 
 Adafruit_NeoPixel pixels2 = Adafruit_NeoPixel(ledCount, buttonLedPin, NEO_GRB + NEO_KHZ800);
 
+//Score visualisatie 
+#define LED_ScoreSunPIN 6
+#define LED_ScoreWaterPIN 4
+
+#define LED_ScoreCOUNT 10
+
+Adafruit_NeoPixel pixels3 = Adafruit_NeoPixel(LED_ScoreCOUNT, LED_ScoreSunPIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel pixels4 = Adafruit_NeoPixel(LED_ScoreCOUNT, LED_ScoreWaterPIN, NEO_GRB + NEO_KHZ800);
+
+int scoreP1 = 0;
+int scoreP2 = 0;
+int currentPixel;
+
+
 long actionTime = 0;
 bool knipperBool = false;
 
@@ -44,6 +58,16 @@ void setup() {
 
   pixels1.clear();
   pixels2.clear();
+
+  //score zon
+  pixels3.begin();
+  pixels3.clear();
+  pixels3.show();  // Zet alle neopixels uit bij de start
+
+  //score water
+  pixels4.begin();
+  pixels4.clear();
+  pixels4.show();  // Zet alle neopixels uit bij de start
 
 }
 
@@ -79,6 +103,8 @@ void loop() {
   } else {
     gameLightDefault();
     gameInProgress = false;
+    scoreP1 = 0;
+    currentPixel = 0;
     pixels2.clear();
     digitalWrite(27, LOW);
   }

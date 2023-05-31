@@ -1,7 +1,6 @@
 int randomLED;
 int randomLEDp1;
 int randomLEDp2;
-int scoreP1 = 0;
 
 const int ledPin =  13;      // the number of the LED pin
 int SpelButtonState = 0;
@@ -48,6 +47,7 @@ void game(){
     digitalWrite(ledPin, HIGH);
       Serial.println("YES");
       scoreP1++;
+      score();
     next = true;
     delay(10);
   } else {
